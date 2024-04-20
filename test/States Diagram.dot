@@ -1,0 +1,47 @@
+/*
+  * Rafael Ramírez Salas
+  * Ingeniería de Computadores, Universidad de Málaga
+  * Trabajo de Fin de Grado 2024: Fail Tolerant DualNano
+*/
+
+digraph finite_state_machine {
+	fontname = "Helvetica, Arial, sans-serif"
+	node [fontname = "Helvetica, Arial, sans-serif"]
+	edge [fontname = "Helvetica, Arial, sans-serif"]
+	rankdir = LR;
+	node [shape = doublecircle]; 0 6 7;
+	node [shape = circle];
+
+	0 [label = "1-Fill"]
+	1 [label = "2-Heat"]
+	2 [label = "3-Fill"]
+	3 [label = "4-Stir"]
+	4 [label = "5-Cool"]
+	5 [label = "6-Empty"]
+	6 [label = "7-Wait"]
+	7 [label = "Alarm"]
+
+	0 -> 0 [label = "Volume < 1500l"];
+	0 -> 1 [label = "Volume = 1500l"];
+	1 -> 1 [label = "Temp < 35ºC"];
+	1 -> 2 [label = "Temp = 35ºC"];
+	2 -> 2 [label = "Volume < 3000l"];
+	2 -> 3 [label = "Volume >= 3000l"];
+	3 -> 3 [label = "!Stirred"];
+	3 -> 4 [label = "Stirred"];
+	4 -> 4 [label = "Temp > 20ºC"];
+	4 -> 5 [label = "Temp = 20ºC"];
+	5 -> 5 [label = "Volume > 0"];
+	5 -> 6 [label = "Volume = 0"];
+	6 -> 6 [label = "!Button Pushed"];
+	6 -> 0 [label = "Button Pushed"];
+	7 -> 7 [label = "!Fixed"];
+	7 -> 0 [label = "Fixed"];
+
+	0 -> 7 [label = "Error"];
+	1 -> 7 [label = "Error"];
+	2 -> 7 [label = "Error"];
+	3 -> 7 [label = "Error"];
+	4 -> 7 [label = "Error"];
+	5 -> 7 [label = "Error"];
+}

@@ -2,13 +2,25 @@
 // Ingeniería de Computadores, Universidad de Málaga
 // Trabajo de Fin de Grado 2024: Fail Tolerant DualNano
 
-#include "SRTank.h"
+#include <SRTank.h>
 
 SRTank tank;
 
 // Constructor.
-SRTank::SRTank() : highFloater(0), lowFloater(0), minTemperature(0), maxTemperature(0), volume(0), temperature(0) {
+SRTank::SRTank() : highFloater(0), lowFloater(0), minTemperature(0), maxTemperature(0), revolutions(0), volume(0), temperature(0) {
     ;
+}
+
+// --------------------- Initialize the tank ---------------------
+
+void SRTank::initSRTank(){
+    // Initialize serial communication.
+    Serial.begin(19200); // The tank communicates with the simulator at 19200 bauds.
+    
+    // Synchronize communication with the simulator.
+    Serial.write(0xFF);
+    Serial.write(0xFF);
+    Serial.write(0xFF);
 }
 
 // --------------------- Getters para los outputs digitales ---------------------
@@ -29,6 +41,14 @@ unsigned char SRTank::getLowFloater(){
     return lowFloater;
 }
 
+unsigned char SRTank::getMinTemperature(){
+    // Request the simulator to measure minTemperature.
+    Serial.write(_MIN_TEMP);
+    while(!Serial.available());
+    minTemperature = Serial.read();
+    return minTemperature;
+}
+
 unsigned char SRTank::getMaxTemperature(){
     // Request the simulator to measure minTemperature.
     Serial.write(_MAX_TEMP);
@@ -37,12 +57,12 @@ unsigned char SRTank::getMaxTemperature(){
     return maxTemperature;
 }
 
-unsigned char SRTank::getMinTemperature(){
-    // Request the simulator to measure minTemperature.
-    Serial.write(_MIN_TEMP);
+unsigned char SRTank::getRevolutions(){
+    // Request the simulator to measure revolutions.
+    Serial.write(_REVOLUTIONS);
     while(!Serial.available());
-    minTemperature = Serial.read();
-    return minTemperature;
+    revolutions = Serial.read();
+    return revolutions;
 }
 
 // --------------------- Getters para los outputs analógicos ---------------------
@@ -108,14 +128,6 @@ void SRTank::setLowFloater(void){
     lowFloater = Serial.read();
 }
 
-// Function to keep maxTemperature value.
-void SRTank::setMaxTemperature(void){    
-    // Request the simulator to measure maxTemperature.
-    Serial.write(_MAX_TEMP);
-    while(!Serial.available());
-    maxTemperature = Serial.read();
-}
-
 // Function to keep minTemperature value.
 void SRTank::setMinTemperature(void){    
     // Request the simulator to measure minTemperature.
@@ -124,6 +136,21 @@ void SRTank::setMinTemperature(void){
     minTemperature = Serial.read();
 }
 
+// Function to keep maxTemperature value.
+void SRTank::setMaxTemperature(void){    
+    // Request the simulator to measure maxTemperature.
+    Serial.write(_MAX_TEMP);
+    while(!Serial.available());
+    maxTemperature = Serial.read();
+}
+
+// Function to keep revolutions value.
+void SRTank::setRevolutions(void){    
+    // Request the simulator to measure revolutions.
+    Serial.write(_MAX_TEMP);
+    while(!Serial.available());
+    revolutions = Serial.read();
+}
 // --------------------- Functions with digital outputs ---------------------
 
 // Function to open the inlet valve.
@@ -287,6 +314,7 @@ SRTankData SRTank::getInit(void){
     tankData.lowFloater = 1;
     tankData.maxTemperature = 1;
     tankData.minTemperature = 1;
+    tankData.revolutions = 1;
     return tankData;
 }
 
@@ -303,16 +331,18 @@ SRTankData SRTank::getStructure(void){
     tankData.lowFloater = getLowFloater();
     tankData.maxTemperature = getMaxTemperature();
     tankData.minTemperature = getMinTemperature();
+    tankData.revolutions = getRevolutions();
     return tankData;
 }
 
 // Define the function packTank.
 void SRTank::packTank(){
     tankData2.popurri = 0;
-    tankData2.popurri |= tankData.highFloater << 3;
-    tankData2.popurri |= tankData.lowFloater << 2;
-    tankData2.popurri |= tankData.maxTemperature << 1;
-    tankData2.popurri |= tankData.minTemperature;
+    tankData2.popurri |= tankData.highFloater << 4;
+    tankData2.popurri |= tankData.lowFloater << 3;
+    tankData2.popurri |= tankData.maxTemperature << 2;
+    tankData2.popurri |= tankData.minTemperature << 1;
+    tankData2.popurri |= tankData.revolutions;
 }
 
 SRTankData2 SRTank::getStructure2(void){
@@ -327,6 +357,7 @@ void SRTank::setStructure(void){
     tankData.lowFloater = getLowFloater();
     tankData.maxTemperature = getMaxTemperature();
     tankData.minTemperature = getMinTemperature();
+    tankData.revolutions = getRevolutions();
     tankData2.volume = getVolume();
     tankData2.temperature = getTemperature();
 }
