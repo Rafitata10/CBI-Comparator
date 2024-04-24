@@ -62,12 +62,10 @@ volatile bool isSPI2Active = false;
 // ISR para SS de SPI_1.
 void SPI1_SS_ISR(){
     isSPI1Active = true; // Inmediatamente inicia la comunicación SPI1 si es posible.
-    digitalWrite(SYNC_2, HIGH); // Advices the second master to go.
 }
 // ISR para SS de SPI_2.
 void SPI2_SS_ISR(){
     isSPI2Active = true; // Inmediatamente inicia la comunicación SPI2 si es posible.
-    digitalWrite(SYNC_1, HIGH); // Advices the first master to go.
 }
 
 // Configuración inicial.
@@ -218,7 +216,6 @@ void executeCommand(unsigned char command){
             break;
         case _ABORT: //  ERROR-Abort
             step = _STEP7;
-            myScreen.showStep(step);
             tank.openOutletValve();
             tank.closeInletValve();
             tank.turnOffHeater();
@@ -236,14 +233,6 @@ void executeCommand(unsigned char command){
     }
 }
 
-// Reset a master.
-void reset(unsigned char master){
-    if(master == 0x1){
-        ack1 = 69; // Reset the first master.
-    } else {
-        ack2 = 69; // Reset the second master.
-    }
-}
 
 // Main loop.
 void loop(){
@@ -272,59 +261,32 @@ void loop(){
         
         isSPI2Active = false; // Termina la comunicación SPI2.
     }
-    if(actualizado1 && actualizado2){
-        if(receivedData1 == receivedData2){
-            if(receivedData1 == 0 && receivedData2 == 0){
-                executeCommand(_ABORT); // Se procede a abortar.
-            } else if(receivedData1 == _ABORT && receivedData2 == _ABORT){
-                executeCommand(_ABORT); // Se procede a abortar.
-            } else {
-                executeCommand(receivedData1); // Ejecuta el comando recibido.
-            }
+    
+    if(receivedData1 == receivedData2){
+        if(receivedData1 == 0 && receivedData2 == 0){
+            executeCommand(_ABORT); // Se procede a abortar.
+        } else if(receivedData1 == _ABORT && receivedData2 == _ABORT){
+            executeCommand(_ABORT); // Se procede a abortar.
         } else {
-            if(receivedData1 == 0){
-                executeCommand(receivedData2); // Ejecuta el comando del master2.
-                // master1 reseting...
-            } else if(receivedData2 == 0){
-                executeCommand(receivedData1); // Ejecuta el comando del master1.
-                // master2 reseting...
-            } else {
-                // ERROR-Discrepancia.
-                digitalWrite(BLUE_LED_4, HIGH);
-                executeCommand(receivedData1); // Ejecuta el comando del master principal.
-                reset(ack2); // Resetea el master2.
-                reset2 = 1; // Flag reset.
-            }
-            executeCommand(receivedData1); // Ejecuta el comando del master principal.
-            reset(ack2); // Resetea el master2.
+            executeCommand(receivedData1); // Ejecuta el comando recibido.
         }
-        receivedData1 = 0; // Limpia el dato recibido.
-        receivedData2 = 0; // Limpia el dato recibido.
-        digitalWrite(SYNC_1, LOW); // Reset the synchronization pin.
-        digitalWrite(SYNC_2, LOW); // Reset the synchronization pin.
-    } else if(actualizado1 && reset2){  // master2 reseting...
+    } else {
+        if(receivedData1 == 0){
+            executeCommand(receivedData2); // Ejecuta el comando del master2.
+            // master1 reseting...
+        } else if(receivedData2 == 0){
+            executeCommand(receivedData1); // Ejecuta el comando del master1.
+            // master2 reseting...
+        } else {
+            // ERROR-Discrepancia.
+            digitalWrite(BLUE_LED_4, HIGH);
+            executeCommand(receivedData1); // Ejecuta el comando del master principal.
+            reset2 = 1; // Flag reset.
+        }
         executeCommand(receivedData1); // Ejecuta el comando del master principal.
-        receivedData1 = 0; // Limpia el dato recibido.
-        receivedData2 = 0; // Limpia el dato recibido.
-    } else if(actualizado2 && reset1){  // master1 reseting...
-        executeCommand(receivedData2); // Ejecuta el comando del master principal.
-        reset(ack1); // Resetea el master1.
-        reset1 = 0; // Flag reset.
-        receivedData1 = 0; // Limpia el dato recibido.
-        receivedData2 = 0; // Limpia el dato recibido.
     }
-
-    // Comprobar si debo actualizar el tanque.
-    unsigned long currentMillis = millis();
-    if(currentMillis - previousMillis >= interval){
-        // Actualizar previousMillis con el tiempo actual.
-        previousMillis = currentMillis;
-        // Actualizar los datos del tanque.
-        refreshData();
-    }
-
-    // Show the current step on the screen.
-    myScreen.showStep(step);
+    receivedData1 = 0; // Limpia el dato recibido.
+    receivedData2 = 0; // Limpia el dato recibido.  
 }
 
 // Path: src/comparator.cpp
