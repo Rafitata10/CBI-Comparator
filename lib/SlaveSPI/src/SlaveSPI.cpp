@@ -22,6 +22,8 @@ void SlaveSPI::beginSlave(){
     pinMode(_sck, INPUT);
     pinMode(_ss, INPUT);
     digitalWrite(_miso, LOW); // Asegura que MISO está en estado bajo por defecto.
+
+    setClockDivider(SPI_CLOCK_DIV32);  // Divide el reloj entre 32.
 }
 
 // Desactiva la comunicación SPI del slave.

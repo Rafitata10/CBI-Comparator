@@ -21,6 +21,27 @@ void SRTank::initSRTank(){
     Serial.write(0xFF);
     Serial.write(0xFF);
     Serial.write(0xFF);
+
+    // Initialize the tank alarm temperature.
+    tank.setMaxTemperatureAlarm(125); // Maximum temperature alarm.
+    tank.setMinTemperatureAlarm(10); // Minimum temperature alarm.
+}
+
+// --------------------- Refresh for the tank ---------------------
+
+void SRTank::refreshData(SRTankData& tankData, SRTankData2& tankData2){
+    tankData = getStructure();
+    tankData2 = getStructure2();
+}
+
+void SRTank::refreshTank(unsigned long& previousMillis){
+    unsigned long currentMillis = millis();
+    if(currentMillis - previousMillis >= _INVERVAL){
+        // Actualizar previousMillis con el tiempo actual.
+        previousMillis = currentMillis;
+        // Actualizar los datos del tanque.
+        refreshData(tankData, tankData2);
+    }
 }
 
 // --------------------- Getters para los outputs digitales ---------------------
@@ -321,8 +342,8 @@ SRTankData SRTank::getInit(void){
 // Initialize the tank with default values.
 SRTankData2 SRTank::getInit2(void){
     packTank();
-    tankData2.volume = 5;
-    tankData2.temperature = 5;
+    tankData2.volume = 1;
+    tankData2.temperature = 1;
     return tankData2;
 }
 

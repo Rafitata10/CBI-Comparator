@@ -29,30 +29,32 @@
 #define _TURN_ON      0x01 // Turn on
 #define _TURN_OFF     0x00 // Turn off
 // Commands.
-#define _OPEN_INLET    0x40 // Open inlet valve
-#define _CLOSE_INLET   0x41 // Close inlet valve
-#define _OPEN_INLET2   0x50 // Open inlet valve (for second time)
-#define _CLOSE_INLET2  0x51 // Close inlet valve (for second time)
-#define _OPEN_OUTLET   0x42 // Open outlet valve
-#define _CLOSE_OUTLET  0x43 // Close outlet valve
-#define _TURN_ON_HEAT  0x44 // Turn on heater
-#define _TURN_OFF_HEAT 0x45 // Turn off heater
-#define _TURN_ON_COOL  0x46 // Turn on cooler
-#define _TURN_OFF_COOL 0x47 // Turn off cooler
-#define _TURN_ON_STIR  0x48 // Turn on stirrer
-#define _TURN_OFF_STIR 0x49 // Turn off stirrer
-#define _STAY_CHILL    0x52 // Stay Chill
-#define _AUXILIAR      0x59 // Auxiliar
-#define _ABORT         0x69 // ABORT
+#define _OPEN_INLET    40 // Open inlet valve
+#define _CLOSE_INLET   41 // Close inlet valve
+#define _OPEN_INLET2   50 // Open inlet valve (for second time)
+#define _CLOSE_INLET2  51 // Close inlet valve (for second time)
+#define _OPEN_OUTLET   42 // Open outlet valve
+#define _CLOSE_OUTLET  43 // Close outlet valve
+#define _TURN_ON_HEAT  44 // Turn on heater
+#define _TURN_OFF_HEAT 45 // Turn off heater
+#define _TURN_ON_COOL  46 // Turn on cooler
+#define _TURN_OFF_COOL 47 // Turn off cooler
+#define _TURN_ON_STIR  48 // Turn on stirrer
+#define _TURN_OFF_STIR 49 // Turn off stirrer
+#define _STAY_CHILL    52 // Stay Chill
+#define _AUXILIAR      59 // Auxiliar
+#define _ABORT         69 // ABORT
 // Steps:
-#define _STEP0 0x00 // Llenar tanque hasta los 1000 litros con una solución ya mezclada de agua con sosa caústica.
-#define _STEP1 0x01 // Calentar la solución a una temperatura de 40ºC.
-#define _STEP2 0x02 // Rellenar con aceites hasta los 2000 litros.
-#define _STEP3 0x03 // Mezclar con el agitador el contenido del tanque, (se removerá hasta que se alcancen los 60ºC).
-#define _STEP4 0x04 // Enfriar la mezcla hasta los 35ºC ya que al tratarse de una reacción exotérmica, se calentará.
-#define _STEP5 0x05 // Abrir la válvula de vaciado del tanque para procesar el resultado en una maquinaria que dividirá y empaquetará el jabón.
-#define _STEP6 0x06 // Finish. (Wait for a button push).
-#define _STEP7 0x07 // ERROR State.
+#define _STEP0 0 // Llenar tanque hasta los 1500 litros con una solución ya mezclada de agua con sosa caústica.
+#define _STEP1 1 // Calentar la solución a una temperatura de 35ºC.
+#define _STEP2 2 // Rellenar con aceites hasta los 3000 litros.
+#define _STEP3 3 // Mezclar con el agitador el contenido del tanque, (se removerá hasta que se alcancen los 50ºC).
+#define _STEP4 4 // Enfriar la mezcla hasta los 25ºC ya que al tratarse de una reacción exotérmica, se calentará.
+#define _STEP5 5 // Abrir la válvula de vaciado del tanque para procesar el resultado en una maquinaria que dividirá y empaquetará el jabón.
+#define _STEP6 6 // Finish. (Wait for a button push).
+#define _STEP7 7 // ERROR State.
+// Define el intervalo de tiempo.
+#define _INVERVAL 500 // 1000
 
 struct SRTankData {
     unsigned char highFloater;
@@ -74,6 +76,9 @@ public:
     SRTank();
     // Initialize the tank.
     void initSRTank();
+    // Refresh for the tank.
+    void refreshData(SRTankData& tankData, SRTankData2& tankData2);
+    void refreshTank(unsigned long& previousMillis);
     // Getters para los outputs digitales.
     unsigned char getHighFloater();
     unsigned char getLowFloater();

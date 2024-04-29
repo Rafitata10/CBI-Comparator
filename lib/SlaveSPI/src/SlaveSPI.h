@@ -10,6 +10,17 @@
 #include <Arduino.h>
 #include <SPI.h>
 
+// Define los pines para mySlave_1.
+#define MOSI_PIN_10 10
+#define MISO_PIN_11 11
+#define SCK_PIN_12 12
+#define SS_PIN_3 3
+// Define los pines para mySlave_2.
+#define MOSI_PIN_7 7
+#define MISO_PIN_8 8
+#define SCK_PIN_9 9
+#define SS_PIN_2 2
+
 class SlaveSPI {
     public:
         SlaveSPI(uint8_t mosi, uint8_t miso, uint8_t sck, uint8_t ss);
