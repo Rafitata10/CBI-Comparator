@@ -8,7 +8,6 @@
 #define _SLAVESPI_H
 
 #include <Arduino.h>
-#include <SPI.h>
 
 // Define los pines para mySlave_1.
 #define MOSI_PIN_10 10
@@ -20,6 +19,14 @@
 #define MISO_PIN_8 8
 #define SCK_PIN_9 9
 #define SS_PIN_2 2
+// Define los posibles divisores de reloj.
+#define SLAVESPI_CLOCK_DIV4 0x00
+#define SLAVESPI_CLOCK_DIV16 0x01
+#define SLAVESPI_CLOCK_DIV64 0x02
+#define SLAVESPI_CLOCK_DIV128 0x03
+#define SLAVESPI_CLOCK_DIV2 0x04
+#define SLAVESPI_CLOCK_DIV8 0x05
+#define SLAVESPI_CLOCK_DIV32 0x06
 
 class SlaveSPI {
     public:

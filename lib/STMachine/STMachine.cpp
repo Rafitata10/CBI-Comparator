@@ -192,7 +192,6 @@ void STMachine::flagReset(unsigned int& receivedData1, unsigned int& receivedDat
 void STMachine::resetAcks(unsigned int& ack1, unsigned int& ack2){
     ack1 = _RESPONSE; // Default value for the first master.
     ack2 = _RESPONSE; // Default value for the second master.
-    // digitalWrite(PIN_RESET, LOW); // Reset the reset pin.
     digitalWrite(BLUE_LED_4, LOW); // Reset the blue led.
 }
 

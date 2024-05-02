@@ -135,7 +135,6 @@ void loop(){
         }
     // Case: Command & Nothing
     } else if(actualizado1 && !actualizado2){  // master1 absent...
-        // digitalWrite(PIN_RESET, HIGH);
         mySTMachine.executeCommand(receivedData1, step, myScreen, tankData, tankData2); // Ejecuta el comando del master principal.
         // mySTMachine.reset(MASTER_2, step, ack1, ack2); // Resetea el master2.
     // Case: Nothing & Command

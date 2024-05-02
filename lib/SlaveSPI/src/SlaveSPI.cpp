@@ -23,7 +23,7 @@ void SlaveSPI::beginSlave(){
     pinMode(_ss, INPUT);
     digitalWrite(_miso, LOW); // Asegura que MISO está en estado bajo por defecto.
 
-    setClockDivider(SPI_CLOCK_DIV32);  // Divide el reloj entre 32.
+    setClockDivider(SLAVESPI_CLOCK_DIV32);  // Divide el reloj entre 32.
 }
 
 // Desactiva la comunicación SPI del slave.
@@ -39,25 +39,25 @@ void SlaveSPI::setBitOrder(uint8_t order){
 // Establece el divisor de reloj.
 void SlaveSPI::setClockDivider(uint32_t div){
     switch(div){
-        case SPI_CLOCK_DIV2:
+        case SLAVESPI_CLOCK_DIV2:
             _delay = 2;
             break;
-        case SPI_CLOCK_DIV4:
+        case SLAVESPI_CLOCK_DIV4:
             _delay = 4;
             break;
-        case SPI_CLOCK_DIV8:
+        case SLAVESPI_CLOCK_DIV8:
             _delay = 8;
             break;
-        case SPI_CLOCK_DIV16:
+        case SLAVESPI_CLOCK_DIV16:
             _delay = 16;
             break;
-        case SPI_CLOCK_DIV32:
+        case SLAVESPI_CLOCK_DIV32:
             _delay = 32;
             break;
-        case SPI_CLOCK_DIV64:
+        case SLAVESPI_CLOCK_DIV64:
             _delay = 64;
             break;
-        case SPI_CLOCK_DIV128:
+        case SLAVESPI_CLOCK_DIV128:
             _delay = 128;
             break;
         default:

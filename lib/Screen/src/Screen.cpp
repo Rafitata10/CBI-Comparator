@@ -17,6 +17,7 @@ void Screen::initialize(){
     display.clearDisplay();
     display.setTextSize(3);
     display.setTextColor(SSD1306_WHITE);
+    showStep(_STEP6);
 }
 
 // Show the current step on the screen.
@@ -28,9 +29,9 @@ void Screen::showStep(unsigned int step){
 
     display.setCursor(0, 32);
     switch(step){
-        case _STEP0: display.println("Filling");  break;
-        case _STEP1: display.println("Heating");  break;
+        case _STEP0: 
         case _STEP2: display.println("Filling");  break;
+        case _STEP1: display.println("Heating");  break;
         case _STEP3: display.println("Mixing");   break;
         case _STEP4: display.println("Cooling");  break;
         case _STEP5: display.println("Empty");    break;
