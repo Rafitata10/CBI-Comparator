@@ -1,0 +1,26 @@
+/*
+  * Rafael Ramírez Salas
+  * Ingeniería de Computadores, Universidad de Málaga
+  * Trabajo de Fin de Grado 2024: Fail Tolerant DualNano
+*/
+
+digraph finite_state_machine {
+	rankdir = LR;
+	fontname = "Helvetica, Arial, sans-serif"
+	node [fontname = "Helvetica, Arial, sans-serif"]
+	edge [fontname = "Helvetica, Arial, sans-serif"]
+	node [shape = doublecircle]; 0;
+	node [shape = circle];
+
+	0  [label = "main loop"]
+	1  [label = "Reset"]
+	2  [label = "Wait Button "]
+
+	0 -> 0   [label = ""];
+	0 -> 1   [label = "Reset Command"];
+	1 -> 2   [label = "System's Off"];
+	1 -> 0   [label = "System's On"];
+	2 -> 0   [label = "Button Pressed"];
+}
+
+// Reset State Machine

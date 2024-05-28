@@ -1,8 +1,8 @@
 Pasos del proceso de saponificación:
 
-1-Abrir la válvula de llenado del tanque con una solución ya mezclada de agua con sosa caústica hasta un cierto punto.
-2-Enciender el heater para calentar la solución a una cierta temperatura.
-3-Rellenar con aceites hasta el máximo del tanque.
-4-Mezclar con el agitador el contenido del tanque.
-5-Enciender el cooler para enfriar la mezcla ya que al tratarse de una reacción exotérmica, se calentará.
+1-Abrir la válvula de llenado del tanque con una solución ya mezclada de agua con sosa caústica hasta un cierto punto, 1500l.
+2-Enciender el heater para calentar la solución a una cierta temperatura, 35ºC.
+3-Rellenar con aceites hasta el máximo del tanque, 3000l.
+4-Mezclar con el agitador el contenido del tanque, como es una reacción quiímica exortérmica, a la vez que se mezcla, se elevará la temperatura de la mezca; esto se realizará hasta que la temperatura llegue a 50ºC.
+5-Enciender el cooler para enfriar la mezcla ya que al tratarse de una reacción exotérmica, se calentará, se devolverá la mezcla a la temperatura de la sala, 35ºC.
 6-Tras una espera, abrir la válvula de vaciado del tanque para procesar el resultado en una maquinaria que dividirá y empaquetará el jabón.

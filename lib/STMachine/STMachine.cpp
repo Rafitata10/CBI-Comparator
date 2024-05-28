@@ -22,7 +22,7 @@ void STMachine::initLeds(){
 void STMachine::executeCommand(unsigned char command, unsigned int& step, Screen& myScreen, SRTankData& tankData, SRTankData2& tankData2){
     switch(command){
         case _OPEN_INLET: // Llenar tanque hasta los 1500 litros con una solución ya mezclada de agua con sosa caústica.
-            if((tankData2.volume <= 1515) && (step == _STEP0 || step == _STEP6 || step == _STEP7)){
+            if((tankData2.volume <= 1520) && (step == _STEP0 || step == _STEP6 || step == _STEP7)){
                 step = _STEP0;
                 tank.openInletValve();
             } else {
@@ -127,6 +127,9 @@ void STMachine::executeCommand(unsigned char command, unsigned int& step, Screen
         case _ABORT: //  ERROR-Abort
             step = _STEP7;
             myScreen.showStep(step);
+            digitalWrite(BLUE_LED_4, LOW);
+            digitalWrite(PIN_RESET, LOW);
+            // myScreen.turnOffRing();
             tank.openOutletValve();
             tank.closeInletValve();
             tank.turnOffHeater();
@@ -189,10 +192,11 @@ void STMachine::flagReset(unsigned int& receivedData1, unsigned int& receivedDat
 }
 
 // Reset the acks after using them and before editing them.
-void STMachine::resetAcks(unsigned int& ack1, unsigned int& ack2){
+void STMachine::resetAcks(unsigned int& ack1, unsigned int& ack2, Screen& myScreen){
     ack1 = _RESPONSE; // Default value for the first master.
     ack2 = _RESPONSE; // Default value for the second master.
     digitalWrite(BLUE_LED_4, LOW); // Reset the blue led.
+    // myScreen.turnOffRing(); // Turn off the LEDs ring.
 }
 
 // Path: lib/STMachine/src/STMachine.h

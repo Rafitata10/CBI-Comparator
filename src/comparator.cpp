@@ -33,6 +33,7 @@ unsigned int ack1 = _RESPONSE;
 unsigned int ack2 = _RESPONSE;
 // Variable para el estado del tanque.
 unsigned int step = _STEP6;
+unsigned int prevStep = _STEP6;
 // Definir intervalo de tiempo para actualizar el tanque.
 unsigned long previousMillis = 0;
 // Variables para manejar las comunicaciones SPI.
@@ -74,6 +75,13 @@ void setup(){
 
 // Main loop.
 void loop(){
+    // Refresh Comparator Screen.
+    if(step != prevStep){
+        // Show the current step on the screen.
+        myScreen.showStep(step);
+        prevStep = step;
+    }
+
     // Máquina de estados para manejar las comunicaciones SPI.
     if(isSPI1Active){ // Sería el master1 y tendría prioridad sobre el master2.
         receivedData1 = slaveSPI_1.transfer(ack1); // Envía confirmación.
@@ -98,7 +106,7 @@ void loop(){
 
     if(actualizado1 && actualizado2){
         // Reset the acks after using them and before editing them.
-        mySTMachine.resetAcks(ack1, ack2);
+        mySTMachine.resetAcks(ack1, ack2, myScreen);
         if(receivedData1 == receivedData2){
             if(receivedData1 == 0){ // Case: 0 & 0
                 mySTMachine.executeCommand(_ABORT, step, myScreen, tankData, tankData2); // Se procede a abortar.
@@ -121,6 +129,7 @@ void loop(){
             } else { // Case: Command-A & Command-B
                 // Discrepancy detected.
                 if(reboot == 0){
+                    // myScreen.turnOnRing();
                     digitalWrite(BLUE_LED_4, HIGH);
                     digitalWrite(PIN_RESET, HIGH);
                     mySTMachine.executeCommand(receivedData1, step, myScreen, tankData, tankData2); // Ejecuta el comando del master principal.
@@ -148,9 +157,6 @@ void loop(){
 
     // Comprobar si debo actualizar el tanque.
     tank.refreshTank(previousMillis);
-    
-    // Show the current step on the screen.
-    myScreen.showStep(step);
 }
 
 // Path: src/comparator.cpp

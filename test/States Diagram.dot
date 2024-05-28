@@ -12,36 +12,36 @@ digraph finite_state_machine {
 	node [shape = doublecircle]; 0 6 7;
 	node [shape = circle];
 
-	0 [label = "1-Fill"]
-	1 [label = "2-Heat"]
-	2 [label = "3-Fill"]
-	3 [label = "4-Stir"]
-	4 [label = "5-Cool"]
-	5 [label = "6-Empty"]
-	6 [label = "7-Wait"]
+	0 [label = "0-Fill"]
+	1 [label = "1-Heat"]
+	2 [label = "2-Fill"]
+	3 [label = "3-Stir"]
+	4 [label = "4-Cool"]
+	5 [label = "5-Empty"]
+	6 [label = "6-Wait"]
 	7 [label = "Alarm"]
 
 	0 -> 0 [label = "Volume < 1500l"];
-	0 -> 1 [label = "Volume = 1500l"];
+	0 -> 1 [label = "Volume = 1500l", color = blue,  fontcolor = blue];
 	1 -> 1 [label = "Temp < 35ºC"];
-	1 -> 2 [label = "Temp = 35ºC"];
+	1 -> 2 [label = "Temp = 35ºC", color = blue,  fontcolor = blue];
 	2 -> 2 [label = "Volume < 3000l"];
-	2 -> 3 [label = "Volume >= 3000l"];
+	2 -> 3 [label = "Volume = 3000l", color = blue,  fontcolor = blue];
 	3 -> 3 [label = "!Stirred"];
-	3 -> 4 [label = "Stirred"];
-	4 -> 4 [label = "Temp > 20ºC"];
-	4 -> 5 [label = "Temp = 20ºC"];
+	3 -> 4 [label = "Stirred", color = blue,  fontcolor = blue];
+	4 -> 4 [label = "Temp > 25ºC"];
+	4 -> 5 [label = "Temp = 25ºC", color = blue,  fontcolor = blue];
 	5 -> 5 [label = "Volume > 0"];
-	5 -> 6 [label = "Volume = 0"];
+	5 -> 6 [label = "Volume = 0", color = blue,  fontcolor = blue];
 	6 -> 6 [label = "!Button Pushed"];
-	6 -> 0 [label = "Button Pushed"];
+	6 -> 0 [label = "Button Pushed", color = blue,  fontcolor = blue];
 	7 -> 7 [label = "!Fixed"];
-	7 -> 0 [label = "Fixed"];
+	7 -> 0 [label = "Fixed", color = green,  fontcolor = green];
 
-	0 -> 7 [label = "Error"];
-	1 -> 7 [label = "Error"];
-	2 -> 7 [label = "Error"];
-	3 -> 7 [label = "Error"];
-	4 -> 7 [label = "Error"];
-	5 -> 7 [label = "Error"];
+	0 -> 7 [label = "Error", color = red, fontcolor = red];
+	1 -> 7 [label = "Error", color = red, fontcolor = red];
+	2 -> 7 [label = "Error", color = red, fontcolor = red];
+	3 -> 7 [label = "Error", color = red, fontcolor = red];
+	4 -> 7 [label = "Error", color = red, fontcolor = red];
+	5 -> 7 [label = "Error", color = red, fontcolor = red];
 }

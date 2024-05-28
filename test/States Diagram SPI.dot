@@ -5,8 +5,8 @@
 */
 
 digraph finite_state_machine {
-	// rankdir=LR;
-	rankdir=TB;  // De arriba hacia abajo
+	// rankdir = LR;
+	rankdir = TB;  // De arriba hacia abajo
 	fontname = "Helvetica, Arial, sans-serif"
 	node [fontname = "Helvetica, Arial, sans-serif"]
 	edge [fontname = "Helvetica, Arial, sans-serif"]
@@ -16,7 +16,7 @@ digraph finite_state_machine {
 	0  [label = " main loop "]
 	1  [label = "ISR1"]
 	2  [label = "ISR2"]
-	3  [label = "Comm"]
+	3  [label = "Communication"]
 
 	//Subgrafos para control de rangos
     {
@@ -49,6 +49,9 @@ digraph finite_state_machine {
 	2 -> 0   [label = " activeCom "];
 	2 -> 3   [label = " !activeCom "];
 
-	3 -> 0   [label = " Done "];
+	3 -> 0   [label = " Communication
+						Done"];
 	
 }
+
+// SPI Protocol State Machine

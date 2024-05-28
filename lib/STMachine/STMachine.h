@@ -38,7 +38,7 @@ class STMachine {
     void refreshData(SRTankData& tankData, SRTankData2& tankData2);
     void reset(unsigned char master, unsigned int step, unsigned int& ack1, unsigned int& ack2);
     void flagReset(unsigned int& receivedData1, unsigned int& receivedData2, unsigned char& actualizado1, unsigned char& actualizado2);
-    void resetAcks(unsigned int& ack1, unsigned int& ack2);
+    void resetAcks(unsigned int& ack1, unsigned int& ack2, Screen& myScreen);
 
   private:
     unsigned int convertir(unsigned int code);
