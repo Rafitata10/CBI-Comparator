@@ -20,10 +20,9 @@ void Screen::initialize(){
     display.setTextColor(SSD1306_WHITE);
     showStep(_STEP6);
 
-    /* Initialize the LEDs ring.
+    // Initialize the LEDs ring.
     strip.begin();
     strip.show(); // Initialize all pixels to 'off'.
-    */
 }
 
 // Show the current step on the screen.

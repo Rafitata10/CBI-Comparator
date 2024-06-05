@@ -129,8 +129,7 @@ void loop(){
             } else { // Case: Command-A & Command-B
                 // Discrepancy detected.
                 if(reboot == 0){
-                    // myScreen.turnOnRing();
-                    digitalWrite(BLUE_LED_4, HIGH);
+                    myScreen.turnOnRing();
                     digitalWrite(PIN_RESET, HIGH);
                     mySTMachine.executeCommand(receivedData1, step, myScreen, tankData, tankData2); // Ejecuta el comando del master principal.
                     mySTMachine.reset(MASTER_2, step, ack1, ack2); // Resetea el master2.

@@ -10,11 +10,7 @@
 STMachine::STMachine(){}
 
 void STMachine::initLeds(){
-    // Inicializar los pines de los LEDs.
-    pinMode(BLUE_LED_4, OUTPUT);
-    digitalWrite(BLUE_LED_4, LOW);
-    pinMode(GREEN_LED_5, OUTPUT);
-    digitalWrite(GREEN_LED_5, LOW);
+    // Inicializar pines.
     pinMode(PIN_RESET, OUTPUT);
 }
 
@@ -127,9 +123,9 @@ void STMachine::executeCommand(unsigned char command, unsigned int& step, Screen
         case _ABORT: //  ERROR-Abort
             step = _STEP7;
             myScreen.showStep(step);
-            digitalWrite(BLUE_LED_4, LOW);
+            myScreen.turnOffRing();
             digitalWrite(PIN_RESET, LOW);
-            // myScreen.turnOffRing();
+            myScreen.turnOffRing();
             tank.openOutletValve();
             tank.closeInletValve();
             tank.turnOffHeater();
@@ -195,8 +191,7 @@ void STMachine::flagReset(unsigned int& receivedData1, unsigned int& receivedDat
 void STMachine::resetAcks(unsigned int& ack1, unsigned int& ack2, Screen& myScreen){
     ack1 = _RESPONSE; // Default value for the first master.
     ack2 = _RESPONSE; // Default value for the second master.
-    digitalWrite(BLUE_LED_4, LOW); // Reset the blue led.
-    // myScreen.turnOffRing(); // Turn off the LEDs ring.
+    myScreen.turnOffRing(); // Turn off the LEDs ring.
 }
 
 // Path: lib/STMachine/src/STMachine.h
