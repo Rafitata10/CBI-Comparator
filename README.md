@@ -1,8 +1,6 @@
-/*
   * Rafael Ramírez Salas
   * Ingeniería de Computadores, Universidad de Málaga
   * Trabajo de Fin de Grado 2024: Fail Tolerant DualNano
-*/
 
 ## Fail Tolerant DualNano - CBI-Comparator
 
