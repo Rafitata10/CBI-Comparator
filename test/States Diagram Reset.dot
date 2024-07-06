@@ -9,7 +9,7 @@ digraph finite_state_machine {
 	fontname = "Helvetica, Arial, sans-serif"
 	node [fontname = "Helvetica, Arial, sans-serif"]
 	edge [fontname = "Helvetica, Arial, sans-serif"]
-	node [shape = doublecircle]; 0;
+	node [shape = doublecircle]; 0; 2;
 	node [shape = circle];
 
 	0  [label = "main loop"]
@@ -21,6 +21,7 @@ digraph finite_state_machine {
 	1 -> 2   [label = "System's Off"];
 	1 -> 0   [label = "System's On"];
 	2 -> 0   [label = "Button Pressed"];
+	2 -> 2   [label = "!Button Pressed"];
 }
 
 // Reset State Machine
